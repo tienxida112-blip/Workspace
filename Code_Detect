@@ -2,18 +2,11 @@ local currentID = game.PlaceId
 
 -- Kiểm tra từng Game ID một
 if currentID == 10449761463 then
-    -- Nếu là Game A
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Link_Script_1.lua"))()
+    -- The Strongest Battlegrounds --
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AimbotV1"))()
 
-elseif currentID == 987654321 then
-    -- Nếu là Game B
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Link_Script_2.lua"))()
-
-elseif currentID == 111222333 then
-    -- Nếu là Game C
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Link_Script_3.lua"))()
-
-else
-    -- Nếu không khớp game nào ở trên thì chạy bản Universal (không bắt buộc)
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/Link_Script_Chung.lua"))()
+elseif currentID == 79091703265657 then
+    -- Blox Fruits --
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AutoKillTsbV1"))()
+    -- More Coming Soon! --
 end
