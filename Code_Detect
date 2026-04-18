@@ -1,7 +1,7 @@
 local currentID = game.PlaceId
 
 -- Kiểm tra từng Game ID một
-if currentID == 123456789 then
+if currentID == 10449761463 then
     -- Nếu là Game A
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Link_Script_1.lua"))()
 
