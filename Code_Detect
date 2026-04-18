@@ -1,6 +1,5 @@
 local currentID = game.PlaceId
-
--- Kiểm tra từng Game ID một
+-- Main --
 if currentID == 10449761463 then
     -- The Strongest Battlegrounds --
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AutoKillTsbV1"))()
