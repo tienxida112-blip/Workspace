@@ -6,5 +6,7 @@ if currentID == 10449761463 then
 elseif currentID == 79091703265657 then
     -- Blox Fruits --
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AimbotV1"))()
+elseif currentID == 9391468976 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_Black_Flasher"))()
     -- More Coming Soon! --
 end
