@@ -1,12 +1,12 @@
-local currentID = game.PlaceId
+local currentID = game.GameId
 -- Main --
-if currentID == 10449761463 then
+if currentID == 3808081382 then
     -- The Strongest Battlegrounds --
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AutoKillTsbV1"))()
-elseif currentID == 79091703265657 then
+elseif currentID == 994732206 then
     -- Blox Fruits --
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AimbotV1"))()
-elseif currentID == 9391468976 then
+elseif currentID == 3508322461 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_Black_Flasher"))()
     -- More Coming Soon! --
 end
