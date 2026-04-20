@@ -1,19 +1,22 @@
 -- Setup --
-local currentID = game.GameId -- for detect game id
+local currentID = game.GameId
+local isPC = game:GetService("UserInputService").KeyboardEnabled
 
 -- Main --
-if currentID == 3808081382 then
-    -- The Strongest Battlegrounds --
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AutoKillTsbV1"))()
-
-elseif currentID == 994732206 then
+if currentID == 994732206 then
     -- Blox Fruits --
     loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AimbotV1"))()
 
-elseif currentID == 3508322461 then
-    -- Jujutsu Shenanigans --
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_Black_Flasher"))()
-    
-    -- More Coming Soon! --
+elseif isPC then
+    -- Pc Only Script --
+    if currentID == 3808081382 then
+        -- The Strongest Battlegrounds --
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_AutoKillTsbV1"))()
+
+    elseif currentID == 3508322461 then
+        -- Jujutsu Shenanigans --
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_Black_Flasher"))()
+        
+        -- More Coming Soon! --
+    end
 end
--- if not working, you should use pc, and you should join vaild game
