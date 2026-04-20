@@ -1,4 +1,5 @@
-local currentID = game.GameId
+-- Setup --
+local currentID = game.GameId -- for detect game id
 
 -- Main --
 if currentID == 3808081382 then
@@ -15,3 +16,4 @@ elseif currentID == 3508322461 then
     
     -- More Coming Soon! --
 end
+-- if not working, you should use pc, and you should join vaild game
