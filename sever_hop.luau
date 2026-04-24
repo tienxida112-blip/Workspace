@@ -31,9 +31,15 @@ local function onButton(btn)
 end
 
 --// =========================
---// NOTIFY
+--// NOTIFY (ANTI SPAM)
 --// =========================
+local lastNotify = ""
 local function notify(text)
+    if _G.STOP then return end
+    if text == lastNotify then return end -- 🔴 chống spam
+
+    lastNotify = text
+
     pcall(function()
         StarterGui:SetCore("SendNotification", {
             Title = "Server Hop",
@@ -81,11 +87,11 @@ local function getServers()
 end
 
 --// =========================
---// QUEUE TELEPORT
+--// QUEUE TELEPORT (FIX STOP)
 --// =========================
-local SCRIPT_URL = "https://pastebin.com/raw/your_script_here"
-
 local function queueScript()
+    if _G.STOP then return end -- 🔴 không queue nếu đã stop
+
     local code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/sever_hop.luau"))()'
 
     if queue_on_teleport then
@@ -96,7 +102,7 @@ local function queueScript()
 end
 
 --// =========================
---// COUNTDOWN
+--// COUNTDOWN (FIX STOP)
 --// =========================
 local function countdown(label)
     for i = COUNTDOWN, 1, -1 do
@@ -139,25 +145,40 @@ local function tryJoin()
 end
 
 --// =========================
---// MAIN LOOP
+--// MAIN LOOP (FIX FULL)
 --// =========================
 task.spawn(function()
-    while not _G.STOP do
+    local lastState = nil
+
+    while true do
+        if _G.STOP then break end
+
         task.wait(CHECK_DELAY)
+
+        if _G.STOP then break end
 
         local ping = getPing()
         print("Ping:", ping)
 
-        if ping > TARGET[2] then
-            notify("Ping High -> Preparing Hop")
+        local state = (ping > TARGET[2]) and "BAD" or "GOOD"
 
+        -- chỉ notify khi đổi trạng thái
+        if state ~= lastState then
+            lastState = state
+
+            if state == "GOOD" then
+                notify("Good Ping 😎")
+            else
+                notify("Ping High -> Preparing Hop")
+            end
+        end
+
+        if state == "BAD" then
             local go = countdown("Hop")
-            if go then
+            if go and not _G.STOP then
                 tryJoin()
                 return
             end
-        else
-            notify("Good Ping 😎")
         end
     end
 
@@ -165,12 +186,11 @@ task.spawn(function()
 end)
 
 --// =========================
---// SAU KHI JOIN (AUTO LOOP TIẾP)
+--// SAU KHI JOIN (FIX)
 --// =========================
 task.spawn(function()
     task.wait(3)
 
-    if not _G.STOP then
-        countdown("Next Check")
-    end
+    if _G.STOP then return end
+    countdown("Next Check")
 end)
