@@ -20,7 +20,7 @@ local LocalPlayer = Players.LocalPlayer
 local PlaceId = game.PlaceId
 
 --// =========================
---// CALLBACK BUTTON
+--// CALLBACK
 --// =========================
 local function onButton(btn)
     if btn == "Skip" then
@@ -31,14 +31,10 @@ local function onButton(btn)
 end
 
 --// =========================
---// NOTIFY (ANTI SPAM)
+--// NOTIFY (FIX TRÙNG)
 --// =========================
-local lastNotify = ""
 local function notify(text)
     if _G.STOP then return end
-    if text == lastNotify then return end -- 🔴 chống spam
-
-    lastNotify = text
 
     pcall(function()
         StarterGui:SetCore("SendNotification", {
@@ -62,7 +58,7 @@ local function getPing()
 end
 
 --// =========================
---// SERVER LIST (ƯU TIÊN ĐÔNG)
+--// SERVER LIST
 --// =========================
 local function getServers()
     local servers = {}
@@ -87,10 +83,10 @@ local function getServers()
 end
 
 --// =========================
---// QUEUE TELEPORT (FIX STOP)
+--// QUEUE TELEPORT
 --// =========================
 local function queueScript()
-    if _G.STOP then return end -- 🔴 không queue nếu đã stop
+    if _G.STOP then return end
 
     local code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/sever_hop.luau"))()'
 
@@ -102,9 +98,9 @@ local function queueScript()
 end
 
 --// =========================
---// COUNTDOWN (FIX STOP)
+--// COUNTDOWN
 --// =========================
-local function countdown(label)
+local function countdown()
     for i = COUNTDOWN, 1, -1 do
         if _G.STOP then return false end
 
@@ -113,14 +109,14 @@ local function countdown(label)
             return true
         end
 
-        notify(label.." - You Have "..i.."s")
+        notify("You Have "..i.."s")
         task.wait(1)
     end
     return true
 end
 
 --// =========================
---// JOIN SERVER
+--// JOIN SERVER (FIX RETRY)
 --// =========================
 local function tryJoin()
     local servers = getServers()
@@ -128,24 +124,25 @@ local function tryJoin()
     for _, server in pairs(servers) do
         if _G.STOP then return end
 
-        print("Trying:", server.id, "Players:", server.playing)
+        print("Trying:", server.id)
 
-        local success = pcall(function()
-            queueScript()
-            TeleportService:TeleportToPlaceInstance(PlaceId, server.id, LocalPlayer)
-        end)
+        queueScript()
+        TeleportService:TeleportToPlaceInstance(PlaceId, server.id, LocalPlayer)
 
-        if success then
-            return
-        else
-            warn("Fail -> next")
-            task.wait(2)
+        -- 🔴 CHỜ XEM CÓ TELEPORT KHÔNG
+        local t = 0
+        while t < 8 do
+            if _G.STOP then return end
+            task.wait(1)
+            t += 1
         end
+
+        warn("Teleport có thể fail -> thử server khác")
     end
 end
 
 --// =========================
---// MAIN LOOP (FIX FULL)
+--// MAIN LOOP (FIX TRÙNG)
 --// =========================
 task.spawn(function()
     local lastState = nil
@@ -154,7 +151,6 @@ task.spawn(function()
         if _G.STOP then break end
 
         task.wait(CHECK_DELAY)
-
         if _G.STOP then break end
 
         local ping = getPing()
@@ -162,19 +158,18 @@ task.spawn(function()
 
         local state = (ping > TARGET[2]) and "BAD" or "GOOD"
 
-        -- chỉ notify khi đổi trạng thái
         if state ~= lastState then
             lastState = state
 
             if state == "GOOD" then
                 notify("Good Ping 😎")
             else
-                notify("Ping High -> Preparing Hop")
+                notify("Ping High -> Hop Soon")
             end
         end
 
         if state == "BAD" then
-            local go = countdown("Hop")
+            local go = countdown()
             if go and not _G.STOP then
                 tryJoin()
                 return
@@ -183,14 +178,4 @@ task.spawn(function()
     end
 
     notify("Stopped.")
-end)
-
---// =========================
---// SAU KHI JOIN (FIX)
---// =========================
-task.spawn(function()
-    task.wait(3)
-
-    if _G.STOP then return end
-    countdown("Next Check")
 end)
