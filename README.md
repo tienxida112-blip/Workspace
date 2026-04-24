@@ -6,4 +6,5 @@ Unlikely Hub (Jujusu Shenanigans, The strongest battleground, blox fruit):
 ```lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/Code_Detect"))()
 ```
-          ---More coming soon---
+
+   More coming soon
