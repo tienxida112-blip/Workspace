@@ -86,7 +86,7 @@ end
 local SCRIPT_URL = "https://pastebin.com/raw/your_script_here"
 
 local function queueScript()
-    local code = 'loadstring(game:HttpGet("'..SCRIPT_URL..'"))()'
+    local code = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/tienxida112-blip/Workspace/refs/heads/main/sever_hop.luau"))()'
 
     if queue_on_teleport then
         queue_on_teleport(code)
